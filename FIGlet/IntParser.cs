@@ -4,10 +4,17 @@
 namespace FIGlet
 {
     using System;
-    using System.Runtime.InteropServices;
 
+    /// <summary>
+    /// Simple methods to parse simple integers
+    /// </summary>
     public static class IntParser
     {
+        /// <summary>
+        /// Tries to parse a literal number, which can be hexadecimal (starting with 0x), octal (starting with 0) or decimal.
+        /// </summary>
+        /// <param name="literal">The literal.</param>
+        /// <returns></returns>
         public static int? TryParse(string literal)
         {
             if (string.IsNullOrEmpty(literal))
@@ -20,9 +27,14 @@ namespace FIGlet
             return TryParse(literal, 10);
         }
 
+        /// <summary>
+        /// Gets a digit from a char, regardless the base.
+        /// </summary>
+        /// <param name="c">The c.</param>
+        /// <returns></returns>
         private static int? GetDigit(char c)
         {
-            if (c >= '0' && c < '9')
+            if (c >= '0' && c <= '9')
                 return c - '0';
             if (c >= 'a' && c <= 'f')
                 return c - 'a' + 10;
@@ -31,6 +43,12 @@ namespace FIGlet
             return null;
         }
 
+        /// <summary>
+        /// Gets a digit, regarding the requested base.
+        /// </summary>
+        /// <param name="c">The c.</param>
+        /// <param name="decimalBase">The decimal base.</param>
+        /// <returns></returns>
         private static int? GetDigit(char c, int decimalBase)
         {
             var v = GetDigit(c);

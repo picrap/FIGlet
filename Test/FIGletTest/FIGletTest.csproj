@@ -16,4 +16,8 @@
     <ProjectReference Include="..\..\FIGlet\FIGlet.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="..\Fonts\small.flf" Link="Fonts\small.flf" />
+  </ItemGroup>
+
 </Project>

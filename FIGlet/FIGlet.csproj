@@ -36,6 +36,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FIGLetter.cs" />
     <Compile Include="FIGletters.cs" />
     <Compile Include="IntParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
