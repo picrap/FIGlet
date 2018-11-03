@@ -45,13 +45,21 @@ namespace FIGletTest
             var aLines = pa.Split(Environment.NewLine);
             var bLines = pb.Split(Environment.NewLine);
             if (aLines.Length != bLines.Length)
+            {
+                Console.WriteLine("Lines count do not match (expected {0}, got {1}", aLines.Length, bLines.Length);
                 return false;
+            }
             for (int index = 0; index < aLines.Length; index++)
             {
                 var aLine = aLines[index].TrimEnd();
                 var bLine = bLines[index].TrimEnd();
                 if (aLine != bLine)
+                {
+                    Console.WriteLine("Lines do not match:");
+                    Console.WriteLine("1: " + aLine);
+                    Console.WriteLine("2: " + bLine);
                     return false;
+                }
             }
 
             return true;
