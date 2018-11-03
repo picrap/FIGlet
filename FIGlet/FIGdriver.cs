@@ -46,6 +46,11 @@ namespace FIGlet
         public CharacterSpacing CharacterSpacing { get; set; } = CharacterSpacing.FullSize;
 
         /// <summary>
+        /// An actual hard blank, to be used for rendering
+        /// </summary>
+        public const char HardBlank = '\u00A0';
+
+        /// <summary>
         /// Returns a simple render (which is enough for most of us)
         /// </summary>
         /// <returns>
@@ -95,6 +100,8 @@ namespace FIGlet
                 for (int column = 0; column < character.Width; column++)
                 {
                     var glyph = character[column, row];
+                    if (glyph == Font.HardBlank)
+                        glyph = HardBlank;
                     var drawingElement = CreateDrawingElement(character, glyph);
                     if (drawingElement is null)
                         continue;

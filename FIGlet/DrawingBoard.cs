@@ -69,10 +69,8 @@ namespace FIGlet
         /// Renders the board as a list of lines.
         /// </summary>
         /// <returns></returns>
-        public IList<string> Render()
+        public IEnumerable<string> Render()
         {
-            var renderedLines=new List<string>();
-
             foreach (var line in _board)
             {
                 var renderedLine = new StringBuilder();
@@ -87,10 +85,8 @@ namespace FIGlet
                 while (renderedLine.Length < Width)
                     renderedLine.Append(' ');
 
-                renderedLines.Add(renderedLine.ToString());
+                yield return renderedLine.ToString();
             }
-
-            return renderedLines.AsReadOnly();
         }
     }
 }
