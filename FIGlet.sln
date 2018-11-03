@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIGlet", "FIGlet\FIGlet.csproj", "{DBEB2DC7-7D7D-41B5-AC52-D54932896A46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIGletTest", "Test\FIGletTest\FIGletTest.csproj", "{E7E521DA-11F8-40BC-BDA7-FCEF72ABF7C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FIGletTest", "Test\FIGletTest\FIGletTest.csproj", "{E7E521DA-11F8-40BC-BDA7-FCEF72ABF7C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIGletDemo", "Test\FIGletDemo\FIGletDemo.csproj", "{D5D1B3D9-2C21-450A-B3A9-E9C561848D8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E7E521DA-11F8-40BC-BDA7-FCEF72ABF7C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7E521DA-11F8-40BC-BDA7-FCEF72ABF7C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7E521DA-11F8-40BC-BDA7-FCEF72ABF7C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5D1B3D9-2C21-450A-B3A9-E9C561848D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5D1B3D9-2C21-450A-B3A9-E9C561848D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5D1B3D9-2C21-450A-B3A9-E9C561848D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5D1B3D9-2C21-450A-B3A9-E9C561848D8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

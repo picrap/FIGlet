@@ -11,7 +11,7 @@ namespace FIGlet
     /// <summary>
     /// Represents the font
     /// </summary>
-    public class FIGletters
+    public class FIGfont
     {
         public char HardBlank { get; private set; }
         public int Height { get; private set; }
@@ -24,9 +24,20 @@ namespace FIGlet
         public int? FullLayout { get; private set; }
         public int? CodetagCount { get; private set; }
 
-        public IList<string> Comment { get; private set; }
+        public IList<string> CommentLines { get; private set; }
 
-        public IDictionary<char, FIGLetter> Letters { get; private set; }
+        public IDictionary<char, FIGcharacter> Characters { get; private set; }
+
+        public static FIGfont FromEmbeddedResource(string resourceName, Type siblingType)
+        {
+            var resourceStream = siblingType.Assembly.GetManifestResourceStream(siblingType, resourceName);
+            using (var streamReader = new StreamReader(resourceStream))
+            {
+                var figFont = new FIGfont();
+                figFont.Read(streamReader);
+                return figFont;
+            }
+        }
 
         /// <summary>
         /// Reads from  the specified <see cref="TextReader"/>.
@@ -61,30 +72,30 @@ namespace FIGlet
             var comment = new List<string>();
             for (int commentLineIndex = 0; commentLineIndex < CommentLinesCount; commentLineIndex++)
                 comment.Add(textReader.ReadLine());
-            Comment = comment.AsReadOnly();
+            CommentLines = comment.AsReadOnly();
 
             // -- now load letters
-            Letters = new Dictionary<char, FIGLetter>();
+            Characters = new Dictionary<char, FIGcharacter>();
             // all ASCII letters
             for (int i = 32; i <= 126; i++)
-                AddLetter(ReadLetter((char)i, textReader));
+                AddCharacter(ReadCharacter((char)i, textReader));
             // then some extended (but implied) extra letters
             foreach (var s in new[] { 196, 214, 220, 228, 246, 252, 223 })
-                AddLetter(ReadLetter((char)s, textReader));
+                AddCharacter(ReadCharacter((char)s, textReader));
 
             // then, it's free bar. Any letter can be added
             for (; ; )
             {
-                var code = ReadLetterCode(textReader, out var description);
+                var code = ReadCharacterCode(textReader, out var description);
                 if (!code.HasValue)
                     break;
-                AddLetter(ReadLetter(code.Value, textReader));
+                AddCharacter(ReadCharacter(code.Value, textReader));
             }
         }
 
-        private void AddLetter(FIGLetter letter)
+        private void AddCharacter(FIGcharacter character)
         {
-            Letters[letter.Code] = letter;
+            Characters[character.Code] = character;
         }
 
         /// <summary>
@@ -93,7 +104,7 @@ namespace FIGlet
         /// <param name="textReader">The text reader.</param>
         /// <param name="description">The char description (if any).</param>
         /// <returns>A <see cref="char"/> representing the code</returns>
-        private char? ReadLetterCode(TextReader textReader, out string description)
+        private char? ReadCharacterCode(TextReader textReader, out string description)
         {
             var line = textReader.ReadLine();
             if (line == null)
@@ -106,12 +117,12 @@ namespace FIGlet
             if (splitIndex == -1)
             {
                 description = null;
-                return (char)Parse(line);
+                return (char)ParseInt(line);
             }
 
             var literalCode = line.Substring(0, splitIndex);
             description = line.Substring(splitIndex + 1).Trim();
-            return (char)Parse(literalCode);
+            return (char)ParseInt(literalCode);
         }
 
         /// <summary>
@@ -120,25 +131,25 @@ namespace FIGlet
         /// <param name="code">The code.</param>
         /// <param name="textReader">The text reader.</param>
         /// <returns></returns>
-        private FIGLetter ReadLetter(char code, TextReader textReader)
+        private FIGcharacter ReadCharacter(char code, TextReader textReader)
         {
-            var letterCharacters = new List<string>();
-            // we guess the trailing character. Maybe it's always @, but I'm not sure now.
-            char? trailingCharacter = null;
+            var characterLines = new List<string>();
+            // we guess the endmark (I need to read the doc twice).
+            char? endMark = null;
             for (; ; )
             {
-                var letterLine = textReader.ReadLine();
-                if (letterLine == null)
+                var rawCharacterLine = textReader.ReadLine();
+                if (rawCharacterLine == null)
                     return null;
-                if (!trailingCharacter.HasValue)
-                    trailingCharacter = letterLine.Last();
-                var trailerCharactersCount = CountTrailing(letterLine, trailingCharacter.Value);
-                var letterLineCharacters = letterLine.Substring(0, letterLine.Length - trailerCharactersCount);
-                letterCharacters.Add(letterLineCharacters);
-                if (trailerCharactersCount == 2)
+                if (!endMark.HasValue)
+                    endMark = rawCharacterLine.Last();
+                var endMarksCount = CountTrailing(rawCharacterLine, endMark.Value);
+                var characterLine = rawCharacterLine.Substring(0, rawCharacterLine.Length - endMarksCount);
+                characterLines.Add(characterLine);
+                if (endMarksCount == 2)
                     break;
             }
-            return new FIGLetter(code, letterCharacters);
+            return new FIGcharacter(code, characterLines);
         }
 
         /// <summary>
@@ -178,18 +189,18 @@ namespace FIGlet
         private void ReadMandatoryInformation(string[] informationParts)
         {
             HardBlank = informationParts[0][0];
-            Height = Parse(informationParts[1]);
-            Baseline = Parse(informationParts[2]);
-            MaxLength = Parse(informationParts[3]);
-            OldLayout = Parse(informationParts[4]);
-            CommentLinesCount = Parse(informationParts[5]);
+            Height = ParseInt(informationParts[1]);
+            Baseline = ParseInt(informationParts[2]);
+            MaxLength = ParseInt(informationParts[3]);
+            OldLayout = ParseInt(informationParts[4]);
+            CommentLinesCount = ParseInt(informationParts[5]);
         }
 
         private void ReadOptionalInformation(string[] informationsParts)
         {
-            PrintDirection = Parse(informationsParts[6]);
-            FullLayout = Parse(informationsParts[7]);
-            CodetagCount = Parse(informationsParts[8]);
+            PrintDirection = ParseInt(informationsParts[6]);
+            FullLayout = ParseInt(informationsParts[7]);
+            CodetagCount = ParseInt(informationsParts[8]);
         }
 
         /// <summary>
@@ -198,7 +209,7 @@ namespace FIGlet
         /// <param name="literal">The literal.</param>
         /// <returns></returns>
         /// <exception cref="FormatException"></exception>
-        private int Parse(string literal)
+        private int ParseInt(string literal)
         {
             var v = IntParser.TryParse(literal);
             if (!v.HasValue)

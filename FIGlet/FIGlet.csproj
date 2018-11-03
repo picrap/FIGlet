@@ -36,8 +36,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FIGLetter.cs" />
-    <Compile Include="FIGletters.cs" />
+    <Compile Include="CharacterSpacing.cs" />
+    <Compile Include="DrawingBoard.cs" />
+    <Compile Include="DrawingElement.cs" />
+    <Compile Include="FIGcharacter.cs" />
+    <Compile Include="FIGfont.cs" />
+    <Compile Include="FIGwriter.cs" />
     <Compile Include="IntParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -27,7 +27,7 @@ namespace FIGletTest
         {
             using (var r = OpenReader("small"))
             {
-                var f = new FIGletters();
+                var f = new FIGfont();
                 f.Read(r);
             }
             // it doesn't fail and that's a good start
