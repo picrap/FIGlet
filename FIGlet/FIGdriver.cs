@@ -14,6 +14,8 @@ namespace FIGlet
     /// </summary>
     public class FIGdriver
     {
+        private readonly Func<FIGcharacter, char, DrawingElement> _createDrawingElement;
+
         public DrawingBoard DrawingBoard { get; } = new DrawingBoard();
 
         /// <summary>
@@ -118,6 +120,18 @@ namespace FIGlet
                 .Or(DrawingElementBlender.EqualCharacterSmushing).Or(DrawingElementBlender.UnderscoreSmushing)
                 .Or(DrawingElementBlender.HierarchySmushing).Or(DrawingElementBlender.OppositePairSmushing)
                 .Or(DrawingElementBlender.BigXSmushing).Or(DrawingElementBlender.HardBlankSmushing);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FIGdriver"/> class.
+        /// </summary>
+        /// <param name="font">The font (optional, it may be added later).</param>
+        /// <param name="createDrawingElement">It allows to create <see cref="DrawingElement"/> from external delegate.
+        /// When this parameter is specified, the method <see cref="CreateDrawingElement"/> is not invoked.</param>
+        public FIGdriver(FIGfont font = null, Func<FIGcharacter, char, DrawingElement> createDrawingElement = null)
+        {
+            _createDrawingElement = createDrawingElement;
+            Font = font;
         }
 
         /// <summary>
@@ -240,11 +254,18 @@ namespace FIGlet
                     var glyph = character[column, row];
                     if (glyph == Font.HardBlank)
                         glyph = HardBlank;
-                    var drawingElement = CreateDrawingElement(character, glyph);
+                    var drawingElement = InvokeCreateDrawingElement(character, glyph);
                     if (drawingElement is null)
                         continue;
                     yield return new CharacterDrawingElement(column, row, drawingElement);
                 }
+        }
+
+        private DrawingElement InvokeCreateDrawingElement(FIGcharacter character, char glyph)
+        {
+            if (!(_createDrawingElement is null))
+                return _createDrawingElement(character, glyph);
+            return CreateDrawingElement(character, glyph);
         }
 
         /// <summary>
@@ -267,7 +288,8 @@ namespace FIGlet
 
         /// <summary>
         /// Creates a drawing element.
-        /// This may be overriden in inherited classes, in order to add your own metadata
+        /// This may be overriden in inherited classes, in order to add your own metadata.
+        /// This method is not invoked if a delegate is given to <see cref="FIGdriver"/> constructor.
         /// </summary>
         /// <param name="character"></param>
         /// <param name="glyph">The character.</param>
