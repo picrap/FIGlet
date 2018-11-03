@@ -19,7 +19,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox x:Name="Input" Grid.Column="0" BorderThickness="0" VerticalContentAlignment="Center" />
-            <ComboBox x:Name="Spacing" Grid.Column="1" SelectedIndex="0" IsEnabled="false">
+            <ComboBox x:Name="Spacing" Grid.Column="1" SelectedIndex="1">
                 <ComboBoxItem Content="Full size" Tag="{x:Static fiGlet:CharacterSpacing.FullSize}" />
                 <ComboBoxItem Content="Fitting" Tag="{x:Static fiGlet:CharacterSpacing.Fitting}"/>
             </ComboBox>

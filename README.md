@@ -13,7 +13,7 @@ It does not work. Wait a bit until it's finished.
 Here are the things to do before we have something to release:  
 - [x] Loading font
 - [x] Full size rendering
-- [ ] Fitting rendering
+- [x] Fitting rendering
 - [ ] Smush rendering?
 - [x] Rendering on buffer
 - [ ] Meta character rendering (such as marking with colors)

@@ -9,7 +9,7 @@ namespace FIGlet
 
     public class FIGcharacter
     {
-        public char Code { get; }
+        public UnicodeChar Code { get; }
 
         public IList<string> Lines { get; }
 
@@ -27,7 +27,7 @@ namespace FIGlet
             }
         }
 
-        public FIGcharacter(char code, IList<string> lines)
+        public FIGcharacter(UnicodeChar code, IList<string> lines)
         {
             Code = code;
             Lines = lines;

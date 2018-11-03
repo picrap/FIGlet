@@ -36,12 +36,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blend\DrawingElementBlender.cs" />
+    <Compile Include="Blend\FlatDrawingElementBlender.cs" />
+    <Compile Include="Blend\IDrawingElementBlender.cs" />
+    <Compile Include="Blend\MultiDrawingElementBlender.cs" />
+    <Compile Include="Blend\NoOverrideDrawingElementBlender.cs" />
+    <Compile Include="Blend\SpecificOverrideDrawingElementBlender.cs" />
+    <Compile Include="CharacterDrawingElement.cs" />
     <Compile Include="CharacterSpacing.cs" />
     <Compile Include="Drawing\DrawingBoard.cs" />
     <Compile Include="Drawing\DrawingElement.cs" />
     <Compile Include="FIGcharacter.cs" />
     <Compile Include="FIGfont.cs" />
     <Compile Include="FIGdriver.cs" />
+    <Compile Include="UnicodeChar.cs" />
     <Compile Include="Utility\IntParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

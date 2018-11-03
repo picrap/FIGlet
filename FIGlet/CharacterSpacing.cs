@@ -8,5 +8,7 @@ namespace FIGlet
         FullSize,
         Fitting,
         Smushing,
+
+        Custom,
     }
 }

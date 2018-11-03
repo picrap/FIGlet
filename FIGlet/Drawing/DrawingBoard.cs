@@ -13,34 +13,34 @@ namespace FIGlet.Drawing
         private readonly IList<IList<DrawingElement>> _board = new List<IList<DrawingElement>>();
 
         /// <summary>
-        /// Gets or sets the <see cref="DrawingElement"/> with the specified position.
+        /// Gets or sets the <see cref="DrawingElement" /> with the specified position.
         /// </summary>
         /// <value>
-        /// The <see cref="DrawingElement"/>.
+        /// The <see cref="DrawingElement" />.
         /// </value>
-        /// <param name="x">The x.</param>
-        /// <param name="y">The y.</param>
+        /// <param name="column">The column.</param>
+        /// <param name="row">The row.</param>
         /// <returns></returns>
-        public DrawingElement this[int x, int y]
+        public DrawingElement this[int column, int row]
         {
             get
             {
                 // assuming the lines are always adjusted
-                var line = _board[y];
+                var line = _board[row];
                 // however rows may not
-                if (x < line.Count)
-                    return line[x];
+                if (column < line.Count)
+                    return line[column];
                 return null;
             }
             set
             {
                 // assuming the lines are always adjusted
-                var line = _board[y];
+                var line = _board[row];
                 // however rows may not
                 // (feel like you've read the same comments in the getter?)
-                while (line.Count <= x)
+                while (line.Count <= column)
                     line.Add(null);
-                line[x] = value;
+                line[column] = value;
             }
         }
 

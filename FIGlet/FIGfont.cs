@@ -27,11 +27,19 @@ namespace FIGlet
 
         public IList<string> CommentLines { get; private set; }
 
-        public IDictionary<char, FIGcharacter> Characters { get; private set; }
+        public IDictionary<UnicodeChar, FIGcharacter> Characters { get; private set; }
 
+        /// <summary>
+        /// Loads a <see cref="FIGfont"/> from an embedded resource.
+        /// </summary>
+        /// <param name="resourceName">Full name of the resource.</param>
+        /// <param name="siblingType">A type in the same project folder as resource (a sibling type, hence the name).</param>
+        /// <returns></returns>
         public static FIGfont FromEmbeddedResource(string resourceName, Type siblingType)
         {
             var resourceStream = siblingType.Assembly.GetManifestResourceStream(siblingType, resourceName);
+            if (resourceStream == null)
+                return null;
             using (var streamReader = new StreamReader(resourceStream))
             {
                 var figFont = new FIGfont();
@@ -76,13 +84,13 @@ namespace FIGlet
             CommentLines = comment.AsReadOnly();
 
             // -- now load letters
-            Characters = new Dictionary<char, FIGcharacter>();
+            Characters = new Dictionary<UnicodeChar, FIGcharacter>();
             // all ASCII letters
             for (int i = 32; i <= 126; i++)
-                AddCharacter(ReadCharacter((char)i, textReader));
+                AddCharacter(ReadCharacter((UnicodeChar)i, textReader));
             // then some extended (but implied) extra letters
             foreach (var s in new[] { 196, 214, 220, 228, 246, 252, 223 })
-                AddCharacter(ReadCharacter((char)s, textReader));
+                AddCharacter(ReadCharacter((UnicodeChar)s, textReader));
 
             // then, it's free bar. Any letter can be added
             for (; ; )
@@ -105,7 +113,7 @@ namespace FIGlet
         /// <param name="textReader">The text reader.</param>
         /// <param name="description">The char description (if any).</param>
         /// <returns>A <see cref="char"/> representing the code</returns>
-        private char? ReadCharacterCode(TextReader textReader, out string description)
+        private UnicodeChar? ReadCharacterCode(TextReader textReader, out string description)
         {
             var line = textReader.ReadLine();
             if (line == null)
@@ -118,12 +126,12 @@ namespace FIGlet
             if (splitIndex == -1)
             {
                 description = null;
-                return (char)ParseInt(line);
+                return (UnicodeChar)ParseInt(line);
             }
 
             var literalCode = line.Substring(0, splitIndex);
             description = line.Substring(splitIndex + 1).Trim();
-            return (char)ParseInt(literalCode);
+            return (UnicodeChar)ParseInt(literalCode);
         }
 
         /// <summary>
@@ -132,7 +140,7 @@ namespace FIGlet
         /// <param name="code">The code.</param>
         /// <param name="textReader">The text reader.</param>
         /// <returns></returns>
-        private FIGcharacter ReadCharacter(char code, TextReader textReader)
+        private FIGcharacter ReadCharacter(UnicodeChar code, TextReader textReader)
         {
             var characterLines = new List<string>();
             // we guess the endmark (I need to read the doc twice).
@@ -187,7 +195,7 @@ namespace FIGlet
             return s.Length;
         }
 
-        private void ReadMandatoryInformation(string[] informationParts)
+        private void ReadMandatoryInformation(IList<string> informationParts)
         {
             HardBlank = informationParts[0][0];
             Height = ParseInt(informationParts[1]);
@@ -197,7 +205,7 @@ namespace FIGlet
             CommentLinesCount = ParseInt(informationParts[5]);
         }
 
-        private void ReadOptionalInformation(string[] informationsParts)
+        private void ReadOptionalInformation(IList<string> informationsParts)
         {
             PrintDirection = ParseInt(informationsParts[6]);
             FullLayout = ParseInt(informationsParts[7]);
