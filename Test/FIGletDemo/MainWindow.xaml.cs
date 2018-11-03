@@ -14,6 +14,8 @@ namespace FIGletDemo
     {
         private readonly FIGfont _font;
 
+        private CharacterSpacing CharacterSpacing => (CharacterSpacing)((FrameworkElement)Spacing.SelectedItem).Tag;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -24,11 +26,13 @@ namespace FIGletDemo
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             FocusManager.SetFocusedElement(Input, Input);
+            Input.TextChanged += delegate { RenderAll(); };
+            Spacing.SelectionChanged += delegate { RenderAll(); };
         }
 
-        private void OnInputTextChanged(object sender, TextChangedEventArgs e)
+        private void RenderAll()
         {
-            var figDriver = new FIGdriver { Font = _font, CharacterSpacing = CharacterSpacing.FullSize };
+            var figDriver = new FIGdriver { Font = _font, CharacterSpacing = CharacterSpacing };
             figDriver.Write(Input.Text);
             Render.Text = figDriver.ToString();
         }

@@ -4,16 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FIGletDemo"
+        xmlns:fiGlet="clr-namespace:FIGlet;assembly=FIGlet"
         mc:Ignorable="d"
         Title="FIGlet for dummies" Height="300" Width="900">
-    <Grid>
+    <Grid Background="#F0F0F0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBox x:Name="Input" Grid.Row="0" TextChanged="OnInputTextChanged" />
-        <TextBox x:Name="Render" Grid.Row="1" IsReadOnly="true" FontFamily="Consolas" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+        <Grid Grid.Row="0" Margin="8" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="Input" Grid.Column="0" BorderThickness="0" VerticalContentAlignment="Center" />
+            <ComboBox x:Name="Spacing" Grid.Column="1" SelectedIndex="0" IsEnabled="false">
+                <ComboBoxItem Content="Full size" Tag="{x:Static fiGlet:CharacterSpacing.FullSize}" />
+                <ComboBoxItem Content="Fitting" Tag="{x:Static fiGlet:CharacterSpacing.Fitting}"/>
+            </ComboBox>
+        </Grid>
+        <TextBox x:Name="Render" Grid.Row="1" IsReadOnly="true" FontFamily="Consolas"
+                 Margin="8,0,8,8" BorderThickness="0"
+                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
 
     </Grid>
 </Window>
