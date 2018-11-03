@@ -12,11 +12,10 @@ A FIGlet library (which should kick asses, or not)
 It does not work. Wait a bit until it's finished.  
 Here are the things to do before we have something to release:  
 - [x] Loading font
-- [ ] Monospaced rendering
-- [ ] Variable width rendering
-- [ ] Kerning rendering
+- [x] Full size rendering
+- [ ] Fitting rendering
 - [ ] Smush rendering?
-- [ ] Rendering on buffer
+- [x] Rendering on buffer
 - [ ] Meta character rendering (such as marking with colors)
 - [ ] CI
 - [ ] Nuget
