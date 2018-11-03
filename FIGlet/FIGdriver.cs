@@ -11,7 +11,7 @@ namespace FIGlet
     /// </summary>
     public class FIGdriver
     {
-        public DrawingBoard DrawingBoard { get; }
+        public DrawingBoard DrawingBoard { get; } = new DrawingBoard();
 
         /// <summary>
         /// Gets or sets the caret (the place at which the next character is going to be inserted.
@@ -44,11 +44,6 @@ namespace FIGlet
         /// The character spacing.
         /// </value>
         public CharacterSpacing CharacterSpacing { get; set; } = CharacterSpacing.FullSize;
-
-        public FIGdriver()
-        {
-            DrawingBoard = new DrawingBoard();
-        }
 
         /// <summary>
         /// Returns a simple render (which is enough for most of us)
