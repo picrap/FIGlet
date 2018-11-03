@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>FIGlet^^lib</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/picrap/FIGlet</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/picrap/FIGlet/master/FIGlet/FIGlet.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>A FIGlet library</summary>
+    <description>$description$</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Pascal Craponne</copyright>
+    <tags>figlet</tags>
+    <developmentDependency>false</developmentDependency>
+  </metadata>
+</package>
