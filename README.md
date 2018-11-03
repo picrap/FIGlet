@@ -1,28 +1,22 @@
 ```
- _______ _______ _______ __         __   
-|    ___|_     _|     __|  |.-----.|  |_ 
-|    ___|_|   |_|    |  |  ||  -__||   _|
-|___|   |_______|_______|__||_____||____|
-```                                         
+  ___ ___ ___ _     _   
+ | __|_ _/ __| |___| |_ 
+ | _| | | (_ | / -_)  _|
+ |_| |___\___|_\___|\__|
+ ```                                         
 
-A FIGlet library (which should kick asses, or not)
+A simple to use (but extensible) FIGlet generator library for .NET framework.  
+Available as a [![NuGet Status](http://img.shields.io/nuget/v/FIGlet-_-lib.svg?style=flat-square)](https://www.nuget.org/packages/FIGlet-_-lib) package.
 
-# This is work in progress!
+# Features
 
-It does not work. Wait a bit until it's finished.  
-Here are the things to do before we have something to release:  
-- [x] Loading font
-- [x] Full size rendering
-- [x] Fitting rendering
-- [x] Smushing rendering
-- [x] Rendering on buffer
-- [ ] Meta character rendering (such as marking with colors)
-- [x] CI
-- [x] Nuget package
-- [x] Zip support
-- [ ] Multi-line
+If you want to know about FIGlet, you can visit the official web site at http://www.figlet.org.  
+The library supports:
+* Loading fonts from text or zip files
+* Full size, fitting or smushing as layout modes
+* Working canvas items are extensible to hold your own metadata (such as color)
 
-# Basic use
+# Use
 
 The following is a very simple example:
 
@@ -37,3 +31,7 @@ figDriver.Write("Great, isn't it?");
 // and get the text
 var text = figDriver.ToString();
 ```
+
+# Want more?
+
+[Ask](https://github.com/picrap/FIGlet/issues) or even better, contribute.
