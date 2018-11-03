@@ -4,15 +4,11 @@
 namespace FIGletDemo
 {
     using System;
-    using System.Windows;
     using System.Windows.Controls;
     using FIGlet;
     using Fonts;
 
-    /// <summary>
-    ///     Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         public MainWindow()
         {
@@ -21,9 +17,9 @@ namespace FIGletDemo
 
         private void OnInputTextChanged(object sender, TextChangedEventArgs e)
         {
-            var figWriter = new FIGwriter { Font = FIGfont.FromEmbeddedResource("small.flf", typeof(FontsRoot)), CharacterSpacing = CharacterSpacing.FullSize };
-            figWriter.Write(Input.Text);
-            Render.Text = string.Join(Environment.NewLine, figWriter.DrawingBoard.Render());
+            var figDriver = new FIGdriver { Font = FIGfont.FromEmbeddedResource("small.flf", typeof(FontsRoot)), CharacterSpacing = CharacterSpacing.FullSize };
+            figDriver.Write(Input.Text);
+            Render.Text = string.Join(Environment.NewLine, figDriver.DrawingBoard.Render());
         }
     }
 }
