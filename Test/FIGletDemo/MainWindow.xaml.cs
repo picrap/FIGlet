@@ -4,6 +4,8 @@
 namespace FIGletDemo
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -12,15 +14,12 @@ namespace FIGletDemo
 
     public partial class MainWindow
     {
-        private readonly FIGfont _font;
-
         private CharacterSpacing CharacterSpacing => (CharacterSpacing)((FrameworkElement)Spacing.SelectedItem).Tag;
 
         public MainWindow()
         {
             InitializeComponent();
             Loaded += OnLoaded;
-            _font = FIGfont.FromEmbeddedResource("small.flf", typeof(FontsRoot));
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -28,11 +27,30 @@ namespace FIGletDemo
             FocusManager.SetFocusedElement(Input, Input);
             Input.TextChanged += delegate { RenderAll(); };
             Spacing.SelectionChanged += delegate { RenderAll(); };
+            Font.SelectionChanged += delegate { RenderAll(); };
+            var fontRefs = FIGfontReference.Parse(typeof(FontsRoot));
+            foreach (var fontRef in fontRefs)
+                Font.Items.Add(new ComboBoxItem { Content = fontRef.Name, Tag = fontRef });
+            Font.SelectedIndex = 0;
+        }
+
+        private string _currentFontName;
+        private FIGfont _currentFont;
+
+        private FIGfont LoadFont(FIGfontReference reference)
+        {
+            if (reference.Name != _currentFontName)
+            {
+                _currentFont = reference.LoadFont();
+                _currentFontName = reference.Name;
+            }
+            return _currentFont;
         }
 
         private void RenderAll()
         {
-            var figDriver = new FIGdriver { Font = _font, CharacterSpacing = CharacterSpacing };
+            var font = LoadFont((FIGfontReference)((FrameworkElement)Font.SelectedItem).Tag);
+            var figDriver = new FIGdriver { Font = font, CharacterSpacing = CharacterSpacing };
             figDriver.Write(Input.Text);
             Render.Text = figDriver.ToString();
         }

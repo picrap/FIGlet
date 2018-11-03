@@ -51,9 +51,11 @@
     <Compile Include="CharacterSpacing.cs" />
     <Compile Include="Drawing\DrawingBoard.cs" />
     <Compile Include="Drawing\DrawingElement.cs" />
+    <Compile Include="EmbeddedFIGfontReference.cs" />
     <Compile Include="FIGcharacter.cs" />
     <Compile Include="FIGfont.cs" />
     <Compile Include="FIGdriver.cs" />
+    <Compile Include="FIGfontReference.cs" />
     <Compile Include="UnicodeChar.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\IntParser.cs" />

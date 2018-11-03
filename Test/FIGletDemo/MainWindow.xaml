@@ -17,13 +17,19 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox x:Name="Input" Grid.Column="0" BorderThickness="0" VerticalContentAlignment="Center" />
-            <ComboBox x:Name="Spacing" Grid.Column="1" SelectedIndex="2">
+            <TextBlock Text="Layout:" Grid.Column="1" VerticalAlignment="Center" Margin="8,0,4,0" />
+            <ComboBox x:Name="Spacing" Grid.Column="2" SelectedIndex="2">
                 <ComboBoxItem Content="Full size" Tag="{x:Static fiGlet:CharacterSpacing.FullSize}" />
                 <ComboBoxItem Content="Fitting" Tag="{x:Static fiGlet:CharacterSpacing.Fitting}"/>
                 <ComboBoxItem Content="Smushing" Tag="{x:Static fiGlet:CharacterSpacing.Smushing}"/>
             </ComboBox>
+            <TextBlock Text="Font:" Grid.Column="3" VerticalAlignment="Center" Margin="8,0,4,0" />
+            <ComboBox x:Name="Font" Grid.Column="4" />
         </Grid>
         <TextBox x:Name="Render" Grid.Row="1" IsReadOnly="true" FontFamily="Consolas"
                  Margin="8,0,8,8" BorderThickness="0"

@@ -62,14 +62,31 @@ namespace FIGlet.Utility
         private static int? TryParse(string literal, int decimalBase)
         {
             var r = 0;
+            bool? positive = null;
             foreach (var c in literal)
             {
+                if (!positive.HasValue)
+                {
+                    if (c == '-')
+                    {
+                        positive = false;
+                        continue; // ignore this char
+                    }
+                    if (c == '+')
+                    {
+                        positive = true;
+                        continue; // ignore this char
+                    }
+                    positive = true;
+                }
                 var v = GetDigit(c, decimalBase);
                 if (!v.HasValue)
                     return null;
                 r = r * decimalBase + v.Value;
             }
 
+            if (positive == false)
+                return -r;
             return r;
         }
     }
