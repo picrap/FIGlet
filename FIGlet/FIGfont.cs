@@ -7,6 +7,7 @@ namespace FIGlet
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using Utility;
 
     /// <summary>
     /// Represents the font

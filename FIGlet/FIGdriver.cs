@@ -4,6 +4,7 @@
 namespace FIGlet
 {
     using System;
+    using Drawing;
 
     /// <summary>
     /// The main instance.

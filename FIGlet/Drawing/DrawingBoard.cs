@@ -1,7 +1,7 @@
 ﻿// A FIGlet generation library - MIT license
 // https://github.com/picrap/FIGlet
 
-namespace FIGlet
+namespace FIGlet.Drawing
 {
     using System;
     using System.Collections.Generic;

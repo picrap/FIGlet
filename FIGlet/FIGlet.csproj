@@ -37,12 +37,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharacterSpacing.cs" />
-    <Compile Include="DrawingBoard.cs" />
-    <Compile Include="DrawingElement.cs" />
+    <Compile Include="Drawing\DrawingBoard.cs" />
+    <Compile Include="Drawing\DrawingElement.cs" />
     <Compile Include="FIGcharacter.cs" />
     <Compile Include="FIGfont.cs" />
     <Compile Include="FIGdriver.cs" />
-    <Compile Include="IntParser.cs" />
+    <Compile Include="Utility\IntParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

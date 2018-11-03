@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FIGletTest
 {
     using FIGlet;
+    using FIGlet.Utility;
 
     [TestClass]
     public class IntParserTest
