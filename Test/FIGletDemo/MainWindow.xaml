@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
 
         <TextBox x:Name="Input" Grid.Row="0" TextChanged="OnInputTextChanged"/>
-        <TextBox x:Name="Render" Grid.Row="1" IsReadOnly="true" FontFamily="Consolas"/>
+        <TextBox x:Name="Render" Grid.Row="1" IsReadOnly="true" FontFamily="Consolas" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
 
     </Grid>
 </Window>

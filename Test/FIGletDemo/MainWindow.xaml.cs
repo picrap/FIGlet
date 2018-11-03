@@ -10,16 +10,20 @@ namespace FIGletDemo
 
     public partial class MainWindow
     {
+        private readonly FIGfont _font;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            _font = FIGfont.FromEmbeddedResource("small.flf", typeof(FontsRoot));
         }
 
         private void OnInputTextChanged(object sender, TextChangedEventArgs e)
         {
-            var figDriver = new FIGdriver { Font = FIGfont.FromEmbeddedResource("small.flf", typeof(FontsRoot)), CharacterSpacing = CharacterSpacing.FullSize };
+            var figDriver = new FIGdriver { Font = _font, CharacterSpacing = CharacterSpacing.FullSize };
             figDriver.Write(Input.Text);
-            Render.Text = string.Join(Environment.NewLine, figDriver.DrawingBoard.Render());
+            Render.Text = figDriver.ToString();
         }
     }
 }
