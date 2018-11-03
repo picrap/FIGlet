@@ -43,7 +43,7 @@ namespace FIGlet
         /// <value>
         /// The character spacing.
         /// </value>
-        public CharacterSpacing CharacterSpacing { get; set; }
+        public CharacterSpacing CharacterSpacing { get; set; } = CharacterSpacing.FullSize;
 
         public FIGdriver()
         {
