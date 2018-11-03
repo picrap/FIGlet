@@ -62,6 +62,7 @@ namespace FIGlet
                         Blender = FittingBlender;
                         break;
                     case CharacterSpacing.Smushing:
+                        Blender = SmushingBlender;
                         break;
                 }
                 _characterSpacing = value;
@@ -86,7 +87,7 @@ namespace FIGlet
         public const char HardBlank = '\u00A0';
 
         /// <summary>
-        /// Gets the fixed size blender.
+        /// Gets the full size blender.
         /// </summary>
         /// <value>
         /// The fixed size blender.
@@ -94,17 +95,29 @@ namespace FIGlet
         public static IDrawingElementBlender FullSizeBlender { get; }
 
         /// <summary>
-        /// Gets the fitted blender.
+        /// Gets the fitting blender.
         /// </summary>
         /// <value>
         /// The fitted blender.
         /// </value>
         public static IDrawingElementBlender FittingBlender { get; }
 
+        /// <summary>
+        /// Gets the smushing blender.
+        /// </summary>
+        /// <value>
+        /// The fitted blender.
+        /// </value>
+        public static IDrawingElementBlender SmushingBlender { get; }
+
         static FIGdriver()
         {
             FullSizeBlender = DrawingElementBlender.WriteOnEmptyOnly;
             FittingBlender = DrawingElementBlender.WriteOnSpace.WithoutPriority();
+            SmushingBlender = FittingBlender
+                .Or(DrawingElementBlender.EqualCharacterSmushing).Or(DrawingElementBlender.UnderscoreSmushing)
+                .Or(DrawingElementBlender.HierarchySmushing).Or(DrawingElementBlender.OppositePairSmushing)
+                .Or(DrawingElementBlender.BigXSmushing).Or(DrawingElementBlender.HardBlankSmushing);
         }
 
         /// <summary>
@@ -172,16 +185,18 @@ namespace FIGlet
             {
                 var column = element.Column + columnOffset;
                 var row = element.Row + rowOffset;
-                drawingBoard[column, row] = blender.TryBlend(drawingBoard[column, row], element.DrawingElement);
+                drawingBoard[column, row] = blender.TryBlend(drawingBoard[column, row], element.DrawingElement) ?? element.DrawingElement;
             }
         }
 
         private int AdjustCaret(FIGcharacter character, DrawingBoard drawingBoard, int columnOffset, int rowOffset, IDrawingElementBlender blender)
         {
+            var previousHasNonBlanks = false;
             for (; ; columnOffset--)
             {
-                if (!CanDraw(character, drawingBoard, columnOffset - 1, rowOffset, blender))
+                if (!CanDraw(character, drawingBoard, columnOffset - 1, rowOffset, blender, out var hasNonBlanks) || previousHasNonBlanks)
                     return columnOffset;
+                previousHasNonBlanks = hasNonBlanks;
             }
         }
 
@@ -193,8 +208,13 @@ namespace FIGlet
         /// <param name="columnOffset">The column offset.</param>
         /// <param name="rowOffset">The row offset.</param>
         /// <param name="blender">The blender.</param>
-        private bool CanDraw(FIGcharacter character, DrawingBoard drawingBoard, int columnOffset, int rowOffset, IDrawingElementBlender blender)
+        /// <param name="hasNonBlanks">if set to <c>true</c> [has non spaces].</param>
+        /// <returns>
+        ///   <c>true</c> if this instance can draw the specified character; otherwise, <c>false</c>.
+        /// </returns>
+        private bool CanDraw(FIGcharacter character, DrawingBoard drawingBoard, int columnOffset, int rowOffset, IDrawingElementBlender blender, out bool hasNonBlanks)
         {
+            hasNonBlanks = false;
             foreach (var element in GetCharacterDrawingElements(character))
             {
                 var column = element.Column + columnOffset;
@@ -202,8 +222,11 @@ namespace FIGlet
                 if (column < 0 || row < 0)
                     return false;
                 // this relies on the fact that element.DrawingElement is never null
-                if (blender.TryBlend(drawingBoard[column, row], element.DrawingElement) is null)
+                var under = drawingBoard[column, row];
+                if (blender.TryBlend(under, element.DrawingElement) is null)
                     return false;
+                if (!(under is null) && !under.IsBlank && !element.DrawingElement.IsBlank)
+                    hasNonBlanks = true;
             }
 
             return true;

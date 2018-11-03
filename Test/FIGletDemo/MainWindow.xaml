@@ -19,9 +19,10 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBox x:Name="Input" Grid.Column="0" BorderThickness="0" VerticalContentAlignment="Center" />
-            <ComboBox x:Name="Spacing" Grid.Column="1" SelectedIndex="1">
+            <ComboBox x:Name="Spacing" Grid.Column="1" SelectedIndex="2">
                 <ComboBoxItem Content="Full size" Tag="{x:Static fiGlet:CharacterSpacing.FullSize}" />
                 <ComboBoxItem Content="Fitting" Tag="{x:Static fiGlet:CharacterSpacing.Fitting}"/>
+                <ComboBoxItem Content="Smushing" Tag="{x:Static fiGlet:CharacterSpacing.Smushing}"/>
             </ComboBox>
         </Grid>
         <TextBox x:Name="Render" Grid.Row="1" IsReadOnly="true" FontFamily="Consolas"

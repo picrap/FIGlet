@@ -14,23 +14,33 @@ namespace FIGlet.Blend
     {
         private readonly bool _overrideEmpty;
         private readonly char[] _overridableGlyphs;
+        private readonly char[] _overridingGlyphs;
 
-        public SpecificOverrideDrawingElementBlender(bool overrideEmpty, params char[] overridableGlyphs)
+        public SpecificOverrideDrawingElementBlender(bool overrideEmpty, char[] overridableGlyphs, char[] overridingGlyphs = null)
         {
             _overrideEmpty = overrideEmpty;
             _overridableGlyphs = overridableGlyphs;
-        }
-
-        public SpecificOverrideDrawingElementBlender()
-            : this(true, ' ')
-        {
+            _overridingGlyphs = overridingGlyphs;
         }
 
         public DrawingElement TryBlend(DrawingElement under, DrawingElement over)
         {
-            if (_overrideEmpty && under is null)
+            if (under is null)
+            {
+                if (_overrideEmpty)
+                    return GetOverridingGlyph(over);
+                return null;
+            }
+            if (_overridableGlyphs.Contains(under.Glyph))
+                return GetOverridingGlyph(over);
+            return null;
+        }
+
+        private DrawingElement GetOverridingGlyph(DrawingElement over)
+        {
+            if (_overridingGlyphs == null || over is null)
                 return over;
-            if (_overridableGlyphs.Contains(under.Character))
+            if (_overridingGlyphs.Contains(over.Glyph))
                 return over;
             return null;
         }

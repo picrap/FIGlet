@@ -14,7 +14,7 @@ Here are the things to do before we have something to release:
 - [x] Loading font
 - [x] Full size rendering
 - [x] Fitting rendering
-- [ ] Smush rendering?
+- [x] Smushing rendering
 - [x] Rendering on buffer
 - [ ] Meta character rendering (such as marking with colors)
 - [ ] CI

@@ -77,7 +77,7 @@ namespace FIGlet.Drawing
                 foreach (var drawingElement in line)
                 {
                     if (drawingElement != null)
-                        renderedLine.Append(drawingElement.Character);
+                        renderedLine.Append(drawingElement.Glyph);
                     else
                         renderedLine.Append(' ');
                 }

@@ -5,11 +5,18 @@ namespace FIGlet.Drawing
 {
     public class DrawingElement
     {
-        public char Character { get; }
+        public char Glyph { get; }
 
-        public DrawingElement(char character)
+        public bool IsBlank => Glyph == ' ' || Glyph == FIGdriver.HardBlank;
+
+        public DrawingElement(char glyph)
         {
-            Character = character;
+            Glyph = glyph;
+        }
+
+        public virtual DrawingElement ReplaceGlyph(char newGlyph)
+        {
+            return new DrawingElement(newGlyph);
         }
     }
 }
