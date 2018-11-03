@@ -42,11 +42,11 @@ namespace FIGletTest
         {
             var pa = P(a);
             var pb = P(b);
-            var aLines = pa.Split(Environment.NewLine);
-            var bLines = pb.Split(Environment.NewLine);
+            var aLines = pa.Split('\n');
+            var bLines = pb.Split('\n');
             if (aLines.Length != bLines.Length)
             {
-                Console.WriteLine("Lines count do not match (expected {0}, got {1}", aLines.Length, bLines.Length);
+                Console.WriteLine("Lines count do not match (expected {0}, got {1})", aLines.Length, bLines.Length);
                 return false;
             }
             for (int index = 0; index < aLines.Length; index++)
