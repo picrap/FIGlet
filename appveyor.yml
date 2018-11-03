@@ -23,7 +23,7 @@ platform: Any CPU
 
 build:
   parallel: true
-  publish_nuget: false
+  publish_nuget: true
   publish_nuget_symbols: true
   verbosity: minimal
   project: FIGlet.sln

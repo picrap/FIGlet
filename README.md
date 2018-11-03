@@ -17,8 +17,8 @@ Here are the things to do before we have something to release:
 - [x] Smushing rendering
 - [x] Rendering on buffer
 - [ ] Meta character rendering (such as marking with colors)
-- [ ] CI
-- [ ] Nuget package
+- [x] CI
+- [x] Nuget package
 - [x] Zip support
 - [ ] Multi-line
 
