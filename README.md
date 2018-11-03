@@ -19,7 +19,7 @@ Here are the things to do before we have something to release:
 - [ ] Meta character rendering (such as marking with colors)
 - [ ] CI
 - [ ] Nuget package
-- [ ] Zip support
+- [x] Zip support
 - [ ] Multi-line
 
 # Basic use

@@ -4,7 +4,6 @@
 namespace FIGletTest
 {
     using System;
-    using System.IO;
     using FIGlet;
     using FIGlet.Blend;
     using Fonts;
@@ -17,6 +16,14 @@ namespace FIGletTest
         public void LoadFont()
         {
             var f = LoadSmallFIGfont();
+            Assert.IsNotNull(f);
+            // it doesn't fail and that's a good start
+        }
+
+        [TestMethod]
+        public void LoadFontFromZip()
+        {
+            var f = FIGfont.FromEmbeddedResource("small.zip", typeof(FontsRoot));
             Assert.IsNotNull(f);
             // it doesn't fail and that's a good start
         }

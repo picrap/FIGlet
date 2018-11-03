@@ -6,7 +6,9 @@ namespace FIGlet
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.IO.Compression;
     using System.Linq;
+    using System.Text;
     using Utility;
 
     /// <summary>
@@ -14,6 +16,8 @@ namespace FIGlet
     /// </summary>
     public class FIGfont
     {
+        public const string FlfSignature = "flf2";
+
         public char HardBlank { get; private set; }
         public int Height { get; private set; }
         public int Baseline { get; private set; }
@@ -40,11 +44,69 @@ namespace FIGlet
             var resourceStream = siblingType.Assembly.GetManifestResourceStream(siblingType, resourceName);
             if (resourceStream == null)
                 return null;
-            using (var streamReader = new StreamReader(resourceStream))
+            return FromStream(resourceStream);
+        }
+
+        private static FIGfont FromStream(Stream stream)
+        {
+            var figFont = new FIGfont();
+            figFont.Read(stream);
+            return figFont;
+        }
+
+        public void Read(Stream stream)
+        {
+            var signatureBytes = new byte[4];
+            stream.Read(signatureBytes, 0, signatureBytes.Length);
+            var flfSignatureBytes = Encoding.ASCII.GetBytes(FlfSignature);
+            if (signatureBytes.SequenceEqual(flfSignatureBytes))
             {
-                var figFont = new FIGfont();
-                figFont.Read(streamReader);
-                return figFont;
+                using (var textReader = new StreamReader(stream))
+                    ReadContent(textReader);
+                return;
+            }
+
+            var pkzipBytes = new byte[] { (byte)'P', (byte)'K', 3, 4 };
+            if (signatureBytes.SequenceEqual(pkzipBytes))
+            {
+                ReadZipContent(stream);
+                return;
+            }
+
+            throw new NotSupportedException("Unknown format (WTF?)");
+        }
+
+        private void ReadZipContent(Stream stream)
+        {
+            stream.ReadShort(); // version
+            stream.ReadShort(); // flag
+            var compressionMethod = stream.ReadShort();
+            stream.ReadShort(); // modification time
+            stream.ReadShort(); // modification date
+            stream.ReadInt(); // CRC-32
+            stream.ReadInt(); // compressed size
+            var uncompressedSize = stream.ReadInt(); // uncompressed size
+            var fileNameLength = stream.ReadShort();
+            var extraFieldLength = stream.ReadShort();
+            var fileNameBytes = stream.ReadBytes(fileNameLength);
+            var extraField = stream.ReadBytes(extraFieldLength);
+
+            var memoryStream = new MemoryStream();
+            using (var decompressionStream = CreateDecompressionStream(stream, compressionMethod))
+                decompressionStream.Copy(memoryStream, uncompressedSize);
+
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            Read(memoryStream);
+        }
+
+        private Stream CreateDecompressionStream(Stream innerStream, int algorithm)
+        {
+            switch (algorithm)
+            {
+                case 8:
+                    return new DeflateStream(innerStream, CompressionMode.Decompress, true);
+                default:
+                    throw new NotSupportedException("Right, not many compression formats are supported...");
             }
         }
 
@@ -61,8 +123,16 @@ namespace FIGlet
         {
             if (!IsValid(textReader))
                 throw new NotSupportedException("The format is unknown");
-            var informations = textReader.ReadLine().TrimEnd();
-            var informationParts = informations.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            ReadContent(textReader);
+        }
+
+        private void ReadContent(TextReader textReader)
+        {
+            textReader.Read(); // that one is skipped
+            var information = textReader.ReadLine()?.TrimEnd();
+            if (information is null)
+                throw new NotSupportedException("The format is unknown (again)");
+            var informationParts = information.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             // 6 parts are mandatory, 3 are optional
             switch (informationParts.Length)
             {
@@ -95,7 +165,7 @@ namespace FIGlet
             // then, it's free bar. Any letter can be added
             for (; ; )
             {
-                var code = ReadCharacterCode(textReader, out var description);
+                var code = ReadCharacterCode(textReader, out _);
                 if (!code.HasValue)
                     break;
                 AddCharacter(ReadCharacter(code.Value, textReader));
@@ -143,7 +213,7 @@ namespace FIGlet
         private FIGcharacter ReadCharacter(UnicodeChar code, TextReader textReader)
         {
             var characterLines = new List<string>();
-            // we guess the endmark (I need to read the doc twice).
+            // we guess the end mark (I need to read the doc twice).
             char? endMark = null;
             for (; ; )
             {
@@ -178,23 +248,6 @@ namespace FIGlet
             return s.Length;
         }
 
-        /// <summary>
-        /// Counts the heading character.
-        /// </summary>
-        /// <param name="s">The s.</param>
-        /// <param name="c">The c.</param>
-        /// <returns></returns>
-        private int CountHeading(string s, char c)
-        {
-            for (int i = 0; i < s.Length; i++)
-            {
-                if (s[i] != c)
-                    return i;
-            }
-
-            return s.Length;
-        }
-
         private void ReadMandatoryInformation(IList<string> informationParts)
         {
             HardBlank = informationParts[0][0];
@@ -205,11 +258,11 @@ namespace FIGlet
             CommentLinesCount = ParseInt(informationParts[5]);
         }
 
-        private void ReadOptionalInformation(IList<string> informationsParts)
+        private void ReadOptionalInformation(IList<string> informationParts)
         {
-            PrintDirection = ParseInt(informationsParts[6]);
-            FullLayout = ParseInt(informationsParts[7]);
-            CodetagCount = ParseInt(informationsParts[8]);
+            PrintDirection = ParseInt(informationParts[6]);
+            FullLayout = ParseInt(informationParts[7]);
+            CodetagCount = ParseInt(informationParts[8]);
         }
 
         /// <summary>
@@ -235,10 +288,10 @@ namespace FIGlet
         /// </returns>
         private static bool IsValid(TextReader textReader)
         {
-            var signatureBuffer = new char[5];
+            var signatureBuffer = new char[4];
             textReader.Read(signatureBuffer, 0, signatureBuffer.Length);
             var signature = new string(signatureBuffer);
-            var b = signature == "flf2a";
+            var b = signature == FlfSignature;
             return b;
         }
     }

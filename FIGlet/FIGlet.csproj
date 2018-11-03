@@ -58,6 +58,7 @@
     <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\IntParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\StreamExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

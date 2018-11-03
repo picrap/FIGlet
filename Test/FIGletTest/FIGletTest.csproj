@@ -20,4 +20,8 @@
     <EmbeddedResource Include="..\Fonts\small.flf" Link="Fonts\small.flf" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="..\Fonts\small.zip" Link="Fonts\small.zip" />
+  </ItemGroup>
+
 </Project>
