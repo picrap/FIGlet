@@ -4,7 +4,9 @@
 namespace FIGletDemo
 {
     using System;
+    using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Input;
     using FIGlet;
     using Fonts;
 
@@ -15,8 +17,13 @@ namespace FIGletDemo
         public MainWindow()
         {
             InitializeComponent();
-
+            Loaded += OnLoaded;
             _font = FIGfont.FromEmbeddedResource("small.flf", typeof(FontsRoot));
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            FocusManager.SetFocusedElement(Input, Input);
         }
 
         private void OnInputTextChanged(object sender, TextChangedEventArgs e)
