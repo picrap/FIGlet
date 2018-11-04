@@ -133,19 +133,8 @@ namespace FIGlet
             if (information is null)
                 throw new NotSupportedException("The format is unknown (again)");
             var informationParts = information.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            // 6 parts are mandatory, 3 are optional
-            switch (informationParts.Length)
-            {
-                case 6:
-                    ReadMandatoryInformation(informationParts);
-                    break;
-                case 9:
-                    ReadMandatoryInformation(informationParts);
-                    ReadOptionalInformation(informationParts);
-                    break;
-                default:
-                    throw new NotSupportedException("Invalid headers");
-            }
+            ReadMandatoryInformation(informationParts);
+            ReadOptionalInformation(informationParts);
 
             // comment is kept (not sure this helps)
             var comment = new List<string>();
@@ -174,7 +163,8 @@ namespace FIGlet
 
         private void AddCharacter(FIGcharacter character)
         {
-            Characters[character.Code] = character;
+            if (character.Code > 0)
+                Characters[character.Code] = character;
         }
 
         /// <summary>
@@ -260,9 +250,12 @@ namespace FIGlet
 
         private void ReadOptionalInformation(IList<string> informationParts)
         {
-            PrintDirection = ParseInt(informationParts[6]);
-            FullLayout = ParseInt(informationParts[7]);
-            CodetagCount = ParseInt(informationParts[8]);
+            if (informationParts.Count > 6)
+                PrintDirection = ParseInt(informationParts[6]);
+            if (informationParts.Count > 7)
+                FullLayout = ParseInt(informationParts[7]);
+            if (informationParts.Count > 8)
+                CodetagCount = ParseInt(informationParts[8]);
         }
 
         /// <summary>

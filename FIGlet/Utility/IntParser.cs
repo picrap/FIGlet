@@ -20,11 +20,27 @@ namespace FIGlet.Utility
             if (string.IsNullOrEmpty(literal))
                 return null;
 
+            bool negate = false;
+            if (literal.StartsWith("-"))
+            {
+                literal = literal.Substring(1);
+                negate = true;
+            }
+
             if (literal.StartsWith("0x", StringComparison.InvariantCultureIgnoreCase))
-                return TryParse(literal.Substring(2), 16);
+                return Sign(TryParse(literal.Substring(2), 16), negate);
             if (literal.StartsWith("0"))
-                return TryParse(literal.Substring(1), 8);
-            return TryParse(literal, 10);
+                return Sign(TryParse(literal.Substring(1), 8), negate);
+            return Sign(TryParse(literal, 10), negate);
+        }
+
+        private static int? Sign(int? v, bool negate)
+        {
+            if (!v.HasValue)
+                return null;
+            if (negate)
+                return -v;
+            return v;
         }
 
         /// <summary>
@@ -62,31 +78,13 @@ namespace FIGlet.Utility
         private static int? TryParse(string literal, int decimalBase)
         {
             var r = 0;
-            bool? positive = null;
             foreach (var c in literal)
             {
-                if (!positive.HasValue)
-                {
-                    if (c == '-')
-                    {
-                        positive = false;
-                        continue; // ignore this char
-                    }
-                    if (c == '+')
-                    {
-                        positive = true;
-                        continue; // ignore this char
-                    }
-                    positive = true;
-                }
                 var v = GetDigit(c, decimalBase);
                 if (!v.HasValue)
                     return null;
                 r = r * decimalBase + v.Value;
             }
-
-            if (positive == false)
-                return -r;
             return r;
         }
     }

@@ -27,7 +27,7 @@ namespace FIGletDemo
             Spacing.SelectionChanged += delegate { RenderAll(); };
             Font.SelectionChanged += delegate { RenderAll(); };
             var fontRefs = FIGfontReference.Parse(typeof(FontsRoot));
-            foreach (var fontRef in fontRefs)
+            foreach (var fontRef in fontRefs.OrderBy(f => f.Name))
                 Font.Items.Add(new ComboBoxItem { Content = fontRef.Name, Tag = fontRef });
             Font.SelectedIndex = 0;
         }
