@@ -38,3 +38,6 @@ var text = figDriver.ToString();
 # Want more?
 
 [Ask](https://github.com/picrap/FIGlet/issues) or even better, contribute.
+
+Current build status: [![Build status](https://ci.appveyor.com/api/projects/status/6u9c856xmat8c5wu?svg=true)](https://ci.appveyor.com/project/picrap/figlet).
+
