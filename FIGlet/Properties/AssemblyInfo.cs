@@ -8,7 +8,7 @@ using System.Reflection;
 [assembly: AssemblyCopyright("MIT license https://opensource.org/licenses/MIT")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyDescription("A FIGlet library that allows to generate ASCII from text.")]
+[assembly: AssemblyDescription("A FIGlet library that allows to generate ASCII art (in the form of big letters) from text.")]
 
 [assembly: AssemblyVersion("1.0")]
 [assembly: AssemblyFileVersion("1.0")]
