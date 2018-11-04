@@ -3,8 +3,6 @@
 
 namespace FIGletDemo
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
@@ -43,6 +41,15 @@ namespace FIGletDemo
             {
                 _currentFont = reference.LoadFont();
                 _currentFontName = reference.Name;
+
+                CharacterSpacing spacing;
+                if (_currentFont.OldLayout == -1)
+                    spacing = CharacterSpacing.FullSize;
+                else if (_currentFont.OldLayout == 0)
+                    spacing = CharacterSpacing.Fitting;
+                else
+                    spacing = CharacterSpacing.Smushing;
+                Spacing.SelectedItem = Spacing.Items.Cast<FrameworkElement>().FirstOrDefault(e => (CharacterSpacing)e.Tag == spacing);
             }
             return _currentFont;
         }
