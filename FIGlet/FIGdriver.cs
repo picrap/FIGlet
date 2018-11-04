@@ -158,7 +158,6 @@ namespace FIGlet
             if (!Font.Characters.TryGetValue(c, out var character))
                 return;
             AdjustDrawingBoardHeight();
-            //AdjustPreDrawCaret(character, CharacterSpacing);
             var rowOffset = Baseline - Font.Baseline;
             var columnOffset = Caret;
             columnOffset = AdjustCaret(character, DrawingBoard, columnOffset, rowOffset, Blender);
@@ -205,6 +204,11 @@ namespace FIGlet
 
         private int AdjustCaret(FIGcharacter character, DrawingBoard drawingBoard, int columnOffset, int rowOffset, IDrawingElementBlender blender)
         {
+            // this is the poor man's fix (again)
+            // character does not have a visual, so we ignore it
+            if (character.Width == 0)
+                return columnOffset;
+
             var previousHasNonBlanks = false;
             for (; ; columnOffset--)
             {
