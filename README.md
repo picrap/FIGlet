@@ -15,16 +15,19 @@ The library supports:
 * Loading fonts from text or zip files
 * Full size, fitting or smushing as layout modes
 * Working canvas items are extensible to hold your own metadata (such as color)
+* Has two integrated fonts ('big' and 'small'), for very lazy people.
 
 # Use
 
 The following is a very simple example:
 
 ```csharp
-// loads a font
+// loads a font...
 var font = FIGfont.FromEmbeddedResource("small.flf", typeof(FontsRoot));
+// ... or use a default font
+var font2 = FIGdriver.DefaultFont;
 // creates the FIGdriver, which renders the text
-var figDriver = new FIGdriver { Font = font };
+var figDriver = new FIGdriver { Font = font /* or font2 */ };
 // add some text
 figDriver.Write("Hi there!");
 figDriver.Write("Great, isn't it?");

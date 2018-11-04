@@ -6,6 +6,8 @@ namespace FIGlet
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
+    using Fonts;
 
     /// <summary>
     /// A reference to a fig font... Somewhere
@@ -52,6 +54,24 @@ namespace FIGlet
                     continue;
 
                 yield return new EmbeddedFIGfontReference(resourceName, siblingType, Path.GetFileNameWithoutExtension(resourceName));
+            }
+        }
+
+        public static IList<FIGfontReference> _integrated;
+
+        /// <summary>
+        /// Gets the integrated fonts references.
+        /// </summary>
+        /// <value>
+        /// The integrated.
+        /// </value>
+        public static IList<FIGfontReference> Integrated
+        {
+            get
+            {
+                if (_integrated is null)
+                    _integrated = Parse(typeof(FontsRoot)).ToArray();
+                return _integrated;
             }
         }
     }

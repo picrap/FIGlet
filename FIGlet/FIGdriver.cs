@@ -112,6 +112,24 @@ namespace FIGlet
         /// </value>
         public static IDrawingElementBlender SmushingBlender { get; }
 
+        private static FIGfont _defaultFont;
+
+        /// <summary>
+        /// Gets the default font.
+        /// </summary>
+        /// <value>
+        /// The default font.
+        /// </value>
+        public static FIGfont DefaultFont
+        {
+            get
+            {
+                if (_defaultFont == null)
+                    _defaultFont = FIGfontReference.Integrated[0].LoadFont();
+                return _defaultFont;
+            }
+        }
+
         static FIGdriver()
         {
             FullSizeBlender = DrawingElementBlender.WriteOnEmptyOnly;

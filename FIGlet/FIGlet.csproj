@@ -56,6 +56,7 @@
     <Compile Include="FIGfont.cs" />
     <Compile Include="FIGdriver.cs" />
     <Compile Include="FIGfontReference.cs" />
+    <Compile Include="Fonts\FontsRoot.cs" />
     <Compile Include="UnicodeChar.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\IntParser.cs" />
@@ -64,6 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="FIGlet.nuspec" />
+    <EmbeddedResource Include="Fonts\big.zip" />
+    <EmbeddedResource Include="Fonts\small.zip" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FIGlet.png" />
