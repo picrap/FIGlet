@@ -64,6 +64,7 @@
     <Compile Include="Fonts\FontsRoot.cs" />
     <Compile Include="UnicodeChar.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
+    <Compile Include="Utility\FIGfontExtensions.cs" />
     <Compile Include="Utility\IntParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\StreamExtensions.cs" />
