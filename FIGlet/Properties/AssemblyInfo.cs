@@ -10,5 +10,5 @@ using System.Reflection;
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyDescription("A FIGlet library that allows to generate ASCII from text.")]
 
-[assembly: AssemblyVersion("0.9")]
-[assembly: AssemblyFileVersion("0.9")]
+[assembly: AssemblyVersion("1.0")]
+[assembly: AssemblyFileVersion("1.0")]
