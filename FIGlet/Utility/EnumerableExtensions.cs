@@ -6,6 +6,9 @@ namespace FIGlet.Utility
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Extensions to <see cref="IEnumerable{T}"/>
+    /// </summary>
     public static  class EnumerableExtensions
     {
         /// <summary>

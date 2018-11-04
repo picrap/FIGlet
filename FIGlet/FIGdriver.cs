@@ -16,6 +16,12 @@ namespace FIGlet
     {
         private readonly Func<FIGcharacter, char, DrawingElement> _createDrawingElement;
 
+        /// <summary>
+        /// Gets the drawing board.
+        /// </summary>
+        /// <value>
+        /// The drawing board.
+        /// </value>
         public DrawingBoard DrawingBoard { get; } = new DrawingBoard();
 
         /// <summary>
@@ -42,7 +48,7 @@ namespace FIGlet
         /// </value>
         public FIGfont Font { get; set; }
 
-        private CharacterSpacing _characterSpacing;
+        private LayoutRule _layoutRule;
 
         /// <summary>
         /// Gets or sets the character spacing.
@@ -50,36 +56,42 @@ namespace FIGlet
         /// <value>
         /// The character spacing.
         /// </value>
-        public CharacterSpacing CharacterSpacing
+        public LayoutRule LayoutRule
         {
-            get { return _characterSpacing; }
+            get { return _layoutRule; }
             set
             {
                 switch (value)
                 {
-                    case CharacterSpacing.FullSize:
+                    case LayoutRule.FullSize:
                         Blender = FullSizeBlender;
                         break;
-                    case CharacterSpacing.Fitting:
+                    case LayoutRule.Fitting:
                         Blender = FittingBlender;
                         break;
-                    case CharacterSpacing.Smushing:
+                    case LayoutRule.Smushing:
                         Blender = SmushingBlender;
                         break;
                 }
-                _characterSpacing = value;
+                _layoutRule = value;
             }
         }
 
         private IDrawingElementBlender _blender;
 
+        /// <summary>
+        /// Gets or sets the blender.
+        /// </summary>
+        /// <value>
+        /// The blender.
+        /// </value>
         public IDrawingElementBlender Blender
         {
             get { return _blender; }
             set
             {
                 _blender = value;
-                _characterSpacing = CharacterSpacing.Custom;
+                _layoutRule = LayoutRule.Custom;
             }
         }
 
@@ -299,13 +311,13 @@ namespace FIGlet
             var above = Font.Baseline;
             while (Baseline < above)
             {
-                DrawingBoard.InsertLine(0);
+                DrawingBoard.InsertEmptyRow(0);
                 Baseline++;
             }
 
             var below = Font.Height - Font.Baseline;
             while (Baseline + below > DrawingBoard.Height)
-                DrawingBoard.InsertLine(DrawingBoard.Height - 1);
+                DrawingBoard.InsertEmptyRow(DrawingBoard.Height - 1);
         }
 
         /// <summary>

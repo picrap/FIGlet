@@ -24,9 +24,9 @@
             <TextBox x:Name="Input" Grid.Column="0" BorderThickness="0" VerticalContentAlignment="Center" />
             <TextBlock Text="Layout:" Grid.Column="3" VerticalAlignment="Center" Margin="8,0,4,0" />
             <ComboBox x:Name="Spacing" Grid.Column="4" SelectedIndex="2" Width="90">
-                <ComboBoxItem Content="Full size" Tag="{x:Static fiGlet:CharacterSpacing.FullSize}" />
-                <ComboBoxItem Content="Fitting" Tag="{x:Static fiGlet:CharacterSpacing.Fitting}"/>
-                <ComboBoxItem Content="Smushing" Tag="{x:Static fiGlet:CharacterSpacing.Smushing}"/>
+                <ComboBoxItem Content="Full size" Tag="{x:Static fiGlet:LayoutRule.FullSize}" />
+                <ComboBoxItem Content="Fitting" Tag="{x:Static fiGlet:LayoutRule.Fitting}"/>
+                <ComboBoxItem Content="Smushing" Tag="{x:Static fiGlet:LayoutRule.Smushing}"/>
             </ComboBox>
             <TextBlock Text="Font:" Grid.Column="1" VerticalAlignment="Center" Margin="8,0,4,0" />
             <ComboBox x:Name="Font" Grid.Column="2" Width="150" />

@@ -21,6 +21,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\FIGlet.xml</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +31,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\FIGlet.xml</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -48,7 +52,7 @@
     <Compile Include="Blend\PairDrawingElementBlender.cs" />
     <Compile Include="Blend\SpecificOverrideDrawingElementBlender.cs" />
     <Compile Include="CharacterDrawingElement.cs" />
-    <Compile Include="CharacterSpacing.cs" />
+    <Compile Include="LayoutRule.cs" />
     <Compile Include="Drawing\DrawingBoard.cs" />
     <Compile Include="Drawing\DrawingElement.cs" />
     <Compile Include="EmbeddedFIGfontReference.cs" />
@@ -56,6 +60,7 @@
     <Compile Include="FIGfont.cs" />
     <Compile Include="FIGdriver.cs" />
     <Compile Include="FIGfontReference.cs" />
+    <Compile Include="FileFIGfontReference.cs" />
     <Compile Include="Fonts\FontsRoot.cs" />
     <Compile Include="UnicodeChar.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />

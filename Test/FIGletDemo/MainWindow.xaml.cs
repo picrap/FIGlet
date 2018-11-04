@@ -3,6 +3,8 @@
 
 namespace FIGletDemo
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
@@ -12,7 +14,7 @@ namespace FIGletDemo
 
     public partial class MainWindow
     {
-        private CharacterSpacing CharacterSpacing => (CharacterSpacing)((FrameworkElement)Spacing.SelectedItem).Tag;
+        private LayoutRule LayoutRule => (LayoutRule)((FrameworkElement)Spacing.SelectedItem).Tag;
 
         public MainWindow()
         {
@@ -26,7 +28,8 @@ namespace FIGletDemo
             Input.TextChanged += delegate { RenderAll(); };
             Spacing.SelectionChanged += delegate { RenderAll(); };
             Font.SelectionChanged += delegate { RenderAll(); };
-            var fontRefs = FIGfontReference.Parse(typeof(FontsRoot));
+            var desktopFolder = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            var fontRefs = FIGfontReference.Parse(typeof(FontsRoot)).Concat(FIGfontReference.Parse(desktopFolder, true));
             foreach (var fontRef in fontRefs.OrderBy(f => f.Name))
                 Font.Items.Add(new ComboBoxItem { Content = fontRef.Name, Tag = fontRef });
             Font.SelectedIndex = 0;
@@ -42,14 +45,14 @@ namespace FIGletDemo
                 _currentFont = reference.LoadFont();
                 _currentFontName = reference.Name;
 
-                CharacterSpacing spacing;
+                LayoutRule spacing;
                 if (_currentFont.OldLayout == -1)
-                    spacing = CharacterSpacing.FullSize;
+                    spacing = LayoutRule.FullSize;
                 else if (_currentFont.OldLayout == 0)
-                    spacing = CharacterSpacing.Fitting;
+                    spacing = LayoutRule.Fitting;
                 else
-                    spacing = CharacterSpacing.Smushing;
-                Spacing.SelectedItem = Spacing.Items.Cast<FrameworkElement>().FirstOrDefault(e => (CharacterSpacing)e.Tag == spacing);
+                    spacing = LayoutRule.Smushing;
+                Spacing.SelectedItem = Spacing.Items.Cast<FrameworkElement>().FirstOrDefault(e => (LayoutRule)e.Tag == spacing);
             }
             return _currentFont;
         }
@@ -57,7 +60,7 @@ namespace FIGletDemo
         private void RenderAll()
         {
             var font = LoadFont((FIGfontReference)((FrameworkElement)Font.SelectedItem).Tag);
-            var figDriver = new FIGdriver { Font = font, CharacterSpacing = CharacterSpacing };
+            var figDriver = new FIGdriver { Font = font, LayoutRule = LayoutRule };
             figDriver.Write(Input.Text);
             Render.Text = figDriver.ToString();
         }

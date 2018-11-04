@@ -7,31 +7,72 @@ namespace FIGlet
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Represents a character to be drawn
+    /// </summary>
     public class FIGcharacter
     {
+        /// <summary>
+        /// The Unicode code.
+        /// </summary>
+        /// <value>
+        /// The code.
+        /// </value>
         public UnicodeChar Code { get; }
 
-        public IList<string> Lines { get; }
+        /// <summary>
+        /// Gets the rows.
+        /// </summary>
+        /// <value>
+        /// The lines.
+        /// </value>
+        public IList<string> Rows { get; }
 
+        /// <summary>
+        /// Gets the width.
+        /// </summary>
+        /// <value>
+        /// The width.
+        /// </value>
         public int Width { get; }
-        public int Height => Lines.Count;
+        /// <summary>
+        /// Gets the height.
+        /// </summary>
+        /// <value>
+        /// The height.
+        /// </value>
+        public int Height => Rows.Count;
 
-        public char this[int x, int y]
+        /// <summary>
+        /// Gets the glyph at specified coordinates.
+        /// </summary>
+        /// <value>
+        /// The <see cref="System.Char"/>.
+        /// </value>
+        /// <param name="column">The x.</param>
+        /// <param name="row">The y.</param>
+        /// <returns></returns>
+        public char this[int column, int row]
         {
             get
             {
-                var line = Lines[y];
-                if (x < line.Length)
-                    return line[x];
+                var rowData = Rows[row];
+                if (column < rowData.Length)
+                    return rowData[column];
                 return '\0';
             }
         }
 
-        public FIGcharacter(UnicodeChar code, IList<string> lines)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FIGcharacter"/> class.
+        /// </summary>
+        /// <param name="code">The code.</param>
+        /// <param name="rows">The rows.</param>
+        public FIGcharacter(UnicodeChar code, IList<string> rows)
         {
             Code = code;
-            Lines = lines;
-            Width = lines.Aggregate(0, (w, l) => Math.Max(w, l.Length));
+            Rows = rows;
+            Width = rows.Aggregate(0, (w, l) => Math.Max(w, l.Length));
         }
     }
 }

@@ -11,6 +11,7 @@ namespace FIGlet.Blend
     /// <seealso cref="FIGlet.Blend.IDrawingElementBlender" />
     public class NoOverrideDrawingElementBlender : IDrawingElementBlender
     {
+        /// <inheritdoc />
         public DrawingElement TryBlend(DrawingElement under, DrawingElement over)
         {
             if (!(under is null))

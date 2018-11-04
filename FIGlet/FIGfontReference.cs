@@ -28,6 +28,10 @@ namespace FIGlet
         /// <returns></returns>
         public abstract FIGfont LoadFont();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FIGfontReference"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
         protected FIGfontReference(string name)
         {
             Name = name;
@@ -48,16 +52,40 @@ namespace FIGlet
                     continue;
 
                 var resourceName = resourcePath.Substring(prefix.Length);
-                var extension = Path.GetExtension(resourceName);
-                if (!extension.Equals(".zip", StringComparison.InvariantCultureIgnoreCase)
-                    && !extension.Equals(".flf", StringComparison.InvariantCultureIgnoreCase))
+                if (!IsHandledExtension(resourceName))
                     continue;
 
                 yield return new EmbeddedFIGfontReference(resourceName, siblingType, Path.GetFileNameWithoutExtension(resourceName));
             }
         }
 
-        public static IList<FIGfontReference> _integrated;
+        /// <summary>
+        /// Parses the specified directory for fonts.
+        /// </summary>
+        /// <param name="directory">The directory.</param>
+        /// <param name="recurse">if set to <c>true</c> recurse.</param>
+        /// <returns></returns>
+        public static IEnumerable<FIGfontReference> Parse(string directory, bool recurse)
+        {
+            var entriesInDirectory = from e in Directory.GetFiles(directory)
+                                     let n = Path.GetFileName(e)
+                                     where IsHandledExtension(n)
+                                     select (FIGfontReference)new FileFIGfontReference(e, Path.GetFileNameWithoutExtension(n));
+            if (recurse)
+                entriesInDirectory = entriesInDirectory.Concat(Directory.GetDirectories(directory).SelectMany(d => Parse(d, true)));
+            return entriesInDirectory;
+        }
+
+        private static bool IsHandledExtension(string fileName)
+        {
+            var extension = Path.GetExtension(fileName);
+            if (string.IsNullOrEmpty(extension))
+                return false;
+            return extension.Equals(".zip", StringComparison.InvariantCultureIgnoreCase)
+                   || extension.Equals(".flf", StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        private static IList<FIGfontReference> _integrated;
 
         /// <summary>
         /// Gets the integrated fonts references.

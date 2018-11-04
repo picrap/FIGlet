@@ -16,21 +16,90 @@ namespace FIGlet
     /// </summary>
     public class FIGfont
     {
+        /// <summary>
+        /// The FLF signature
+        /// </summary>
         public const string FlfSignature = "flf2";
 
+        /// <summary>
+        /// Gets the hard blank character.
+        /// </summary>
+        /// <value>
+        /// The hard blank.
+        /// </value>
         public char HardBlank { get; private set; }
+        /// <summary>
+        /// Gets the font height.
+        /// </summary>
+        /// <value>
+        /// The height.
+        /// </value>
         public int Height { get; private set; }
+        /// <summary>
+        /// Gets the font baseline.
+        /// </summary>
+        /// <value>
+        /// The baseline.
+        /// </value>
         public int Baseline { get; private set; }
+        /// <summary>
+        /// Gets the maximum length.
+        /// </summary>
+        /// <value>
+        /// The maximum length.
+        /// </value>
         public int MaxLength { get; private set; }
+        /// <summary>
+        /// Gets the old layout flags.
+        /// </summary>
+        /// <value>
+        /// The old layout.
+        /// </value>
         public int OldLayout { get; private set; }
+        /// <summary>
+        /// Gets the comment lines count.
+        /// </summary>
+        /// <value>
+        /// The comment lines count.
+        /// </value>
         public int CommentLinesCount { get; private set; }
 
+        /// <summary>
+        /// Gets the print direction.
+        /// </summary>
+        /// <value>
+        /// The print direction.
+        /// </value>
         public int? PrintDirection { get; private set; }
+        /// <summary>
+        /// Gets the full layout flags.
+        /// </summary>
+        /// <value>
+        /// The full layout.
+        /// </value>
         public int? FullLayout { get; private set; }
+        /// <summary>
+        /// Gets the codetag count.
+        /// </summary>
+        /// <value>
+        /// The codetag count.
+        /// </value>
         public int? CodetagCount { get; private set; }
 
+        /// <summary>
+        /// Gets the comment lines.
+        /// </summary>
+        /// <value>
+        /// The comment lines.
+        /// </value>
         public IList<string> CommentLines { get; private set; }
 
+        /// <summary>
+        /// Gets the characters.
+        /// </summary>
+        /// <value>
+        /// The characters.
+        /// </value>
         public IDictionary<UnicodeChar, FIGcharacter> Characters { get; private set; }
 
         /// <summary>
@@ -47,13 +116,34 @@ namespace FIGlet
             return FromStream(resourceStream);
         }
 
-        private static FIGfont FromStream(Stream stream)
+        /// <summary>
+        /// Reads a <see cref="FIGfont"/> from an open <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <returns></returns>
+        public static FIGfont FromStream(Stream stream)
         {
             var figFont = new FIGfont();
             figFont.Read(stream);
             return figFont;
         }
 
+        /// <summary>
+        /// Reads a <see cref="FIGfont"/> from a file
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
+        public static FIGfont FromFile(string path)
+        {
+            using (var fileStream = File.OpenRead(path))
+                return FromStream(fileStream);
+        }
+
+        /// <summary>
+        /// Reads from specified stream.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <exception cref="NotSupportedException">Unknown format (WTF?)</exception>
         public void Read(Stream stream)
         {
             var signatureBytes = new byte[4];
@@ -163,7 +253,7 @@ namespace FIGlet
 
         private void AddCharacter(FIGcharacter character)
         {
-            if (character.Code > 0)
+            if (!(character is null) && character.Code > 0)
                 Characters[character.Code] = character;
         }
 

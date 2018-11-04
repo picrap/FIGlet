@@ -14,11 +14,16 @@ namespace FIGlet.Blend
     {
         private readonly char[] _except;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EqualsDrawingElementBlender"/> class.
+        /// </summary>
+        /// <param name="except">The except.</param>
         public EqualsDrawingElementBlender(char[] except)
         {
             _except = except;
         }
 
+        /// <inheritdoc />
         public DrawingElement TryBlend(DrawingElement under, DrawingElement over)
         {
             if (_except != null && _except.Contains(over.Glyph))

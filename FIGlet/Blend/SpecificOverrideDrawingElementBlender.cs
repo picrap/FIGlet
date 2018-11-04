@@ -16,6 +16,12 @@ namespace FIGlet.Blend
         private readonly char[] _overridableGlyphs;
         private readonly char[] _overridingGlyphs;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SpecificOverrideDrawingElementBlender"/> class.
+        /// </summary>
+        /// <param name="overrideEmpty">if set to <c>true</c> [override empty].</param>
+        /// <param name="overridableGlyphs">The overridable glyphs.</param>
+        /// <param name="overridingGlyphs">The overriding glyphs.</param>
         public SpecificOverrideDrawingElementBlender(bool overrideEmpty, char[] overridableGlyphs, char[] overridingGlyphs = null)
         {
             _overrideEmpty = overrideEmpty;
@@ -23,6 +29,7 @@ namespace FIGlet.Blend
             _overridingGlyphs = overridingGlyphs;
         }
 
+        /// <inheritdoc />
         public DrawingElement TryBlend(DrawingElement under, DrawingElement over)
         {
             if (under is null)

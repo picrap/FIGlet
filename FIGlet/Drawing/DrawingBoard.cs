@@ -8,6 +8,9 @@ namespace FIGlet.Drawing
     using System.Linq;
     using System.Text;
 
+    /// <summary>
+    /// A grid of <see cref="DrawingElement"/>
+    /// </summary>
     public class DrawingBoard
     {
         private readonly IList<IList<DrawingElement>> _board = new List<IList<DrawingElement>>();
@@ -60,9 +63,13 @@ namespace FIGlet.Drawing
         /// </value>
         public int Height => _board.Count;
 
-        public void InsertLine(int lineIndex)
+        /// <summary>
+        /// Inserts an empty line.
+        /// </summary>
+        /// <param name="rowIndex">Index of the line.</param>
+        public void InsertEmptyRow(int rowIndex)
         {
-            _board.Insert(lineIndex, new List<DrawingElement>());
+            _board.Insert(rowIndex, new List<DrawingElement>());
         }
 
         /// <summary>

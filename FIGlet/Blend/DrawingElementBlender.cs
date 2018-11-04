@@ -3,30 +3,62 @@
 
 namespace FIGlet.Blend
 {
+    /// <summary>
+    /// This class holds special instances of <see cref="IDrawingElementBlender"/> implementations
+    /// </summary>
     public static class DrawingElementBlender
     {
+        /// <summary>
+        /// A blender that will write only on empty spaces
+        /// </summary>
         public static readonly IDrawingElementBlender WriteOnEmptyOnly = new NoOverrideDrawingElementBlender();
 
+        /// <summary>
+        /// A blender that writes on spaces (and also empty spaces)
+        /// </summary>
         public static readonly IDrawingElementBlender WriteOnSpace = new SpecificOverrideDrawingElementBlender(true, new[] { ' ' });
 
+        /// <summary>
+        /// Transforms a blender to a blender without priority (under=over).
+        /// </summary>
+        /// <param name="blender">The blender.</param>
+        /// <returns></returns>
         public static IDrawingElementBlender WithoutPriority(this IDrawingElementBlender blender)
         {
             return new FlatDrawingElementBlender(blender);
         }
 
+        /// <summary>
+        /// Inverses the specified blender. Allows to blend if inner blender refuses to.
+        /// </summary>
+        /// <param name="blender">The blender.</param>
+        /// <returns></returns>
         public static IDrawingElementBlender Inverse(this IDrawingElementBlender blender)
         {
             return new InverseDrawingElementBlender(blender);
         }
 
+        /// <summary>
+        /// Specific blend: merges to given arguments to a specified third.
+        /// </summary>
+        /// <param name="under">The under.</param>
+        /// <param name="over">The over.</param>
+        /// <param name="replace">The replace.</param>
+        /// <returns></returns>
         public static IDrawingElementBlender Blend(char under, char over, char replace)
         {
             return new PairDrawingElementBlender(under, over, replace);
         }
 
+        /// <summary>
+        /// Applies one or another blender (the first that works)
+        /// </summary>
+        /// <param name="a">a.</param>
+        /// <param name="b">The b.</param>
+        /// <returns></returns>
         public static IDrawingElementBlender Or(this IDrawingElementBlender a, IDrawingElementBlender b)
         {
-            // TODO: optimize
+            // TODO: optimize (if a or b is already a MultiDrawingElementBlender)
             return new MultiDrawingElementBlender(a, b);
         }
 
