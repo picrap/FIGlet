@@ -10,5 +10,5 @@ using System.Reflection;
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyDescription("A FIGlet library that allows to generate ASCII art (in the form of big letters) from text. Supports most common features such as fitting and smushing, reads fonts from raw or zipped files and offers extensibility.")]
 
-[assembly: AssemblyVersion("1.0.3")]
-[assembly: AssemblyFileVersion("1.0.3")]
+[assembly: AssemblyVersion("1.0.4")]
+[assembly: AssemblyFileVersion("1.0.4")]
