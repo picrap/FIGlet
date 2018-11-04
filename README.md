@@ -19,7 +19,12 @@ The library supports:
 
 # Use
 
-The following is a very simple example:
+The smallest sample:
+```csharp
+var text = FIGdriver.DefaultFont.Render("Hello, world");
+```
+
+With a little more details, another example:
 
 ```csharp
 // loads a font...
