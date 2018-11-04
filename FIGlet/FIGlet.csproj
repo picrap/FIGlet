@@ -74,7 +74,7 @@
     <EmbeddedResource Include="Fonts\small.zip" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FIGlet.png" />
+    <None Include="FIGlet.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
