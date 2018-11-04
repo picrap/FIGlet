@@ -40,13 +40,24 @@ namespace FIGlet
         /// </value>
         public int Baseline { get; set; }
 
+        private FIGfont _font;
+
         /// <summary>
         /// Gets or sets the font.
         /// </summary>
         /// <value>
         /// The font.
         /// </value>
-        public FIGfont Font { get; set; }
+        public FIGfont Font
+        {
+            get { return _font; }
+            set
+            {
+                _font = value;
+                if (value != null)
+                    LayoutRule = value.DefaultLayoutRule;
+            }
+        }
 
         private LayoutRule _layoutRule;
 

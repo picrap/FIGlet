@@ -44,15 +44,7 @@ namespace FIGletDemo
             {
                 _currentFont = reference.LoadFont();
                 _currentFontName = reference.Name;
-
-                LayoutRule spacing;
-                if (_currentFont.OldLayout == -1)
-                    spacing = LayoutRule.FullSize;
-                else if (_currentFont.OldLayout == 0)
-                    spacing = LayoutRule.Fitting;
-                else
-                    spacing = LayoutRule.Smushing;
-                Spacing.SelectedItem = Spacing.Items.Cast<FrameworkElement>().FirstOrDefault(e => (LayoutRule)e.Tag == spacing);
+                Spacing.SelectedItem = Spacing.Items.Cast<FrameworkElement>().FirstOrDefault(e => (LayoutRule)e.Tag == _currentFont.DefaultLayoutRule);
             }
             return _currentFont;
         }

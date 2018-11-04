@@ -103,6 +103,24 @@ namespace FIGlet
         public IDictionary<UnicodeChar, FIGcharacter> Characters { get; private set; }
 
         /// <summary>
+        /// Gets the default layout rule.
+        /// </summary>
+        /// <value>
+        /// The layout rule.
+        /// </value>
+        public LayoutRule DefaultLayoutRule
+        {
+            get
+            {
+                if (OldLayout == -1)
+                    return LayoutRule.FullSize;
+                if (OldLayout == 0)
+                    return LayoutRule.Fitting;
+                return LayoutRule.Smushing;
+            }
+        }
+
+        /// <summary>
         /// Loads a <see cref="FIGfont"/> from an embedded resource.
         /// </summary>
         /// <param name="resourceName">Full name of the resource.</param>
