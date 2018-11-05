@@ -310,7 +310,7 @@ namespace FIGlet
         {
             if (!(_createDrawingElement is null))
                 return _createDrawingElement(character, glyph);
-            return CreateDrawingElement(character, glyph);
+            return CreateDrawingElement(glyph, character, this);
         }
 
         /// <summary>
@@ -336,10 +336,11 @@ namespace FIGlet
         /// This may be overriden in inherited classes, in order to add your own metadata.
         /// This method is not invoked if a delegate is given to <see cref="FIGdriver"/> constructor.
         /// </summary>
-        /// <param name="character"></param>
-        /// <param name="glyph">The character.</param>
+        /// <param name="glyph">The glyph to be displayed.</param>
+        /// <param name="character">The related <see cref="FIGcharacter"/> that generated this glyph</param>
+        /// <param name="driver">The related <see cref="FIGdriver"/> that generated this glyph</param>
         /// <returns></returns>
-        protected virtual DrawingElement CreateDrawingElement(FIGcharacter character, char glyph)
+        protected virtual DrawingElement CreateDrawingElement(char glyph, FIGcharacter character, FIGdriver driver)
         {
             if (glyph == '\0')
                 return null;
