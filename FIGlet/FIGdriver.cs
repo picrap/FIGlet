@@ -310,7 +310,7 @@ namespace FIGlet
         {
             if (!(_createDrawingElement is null))
                 return _createDrawingElement(character, glyph);
-            return CreateDrawingElement(glyph, character, this);
+            return CreateDrawingElement(glyph, character);
         }
 
         /// <summary>
@@ -338,9 +338,8 @@ namespace FIGlet
         /// </summary>
         /// <param name="glyph">The glyph to be displayed.</param>
         /// <param name="character">The related <see cref="FIGcharacter"/> that generated this glyph</param>
-        /// <param name="driver">The related <see cref="FIGdriver"/> that generated this glyph</param>
         /// <returns></returns>
-        protected virtual DrawingElement CreateDrawingElement(char glyph, FIGcharacter character, FIGdriver driver)
+        protected virtual DrawingElement CreateDrawingElement(char glyph, FIGcharacter character)
         {
             if (glyph == '\0')
                 return null;
