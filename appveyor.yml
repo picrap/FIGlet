@@ -7,9 +7,6 @@ branches:
 version: '{branch}-{build}'
 image: Visual Studio 2017
 
-install:
-#  - git submodule update --init --recursive
-
 before_build:
   nuget restore
 
@@ -19,14 +16,12 @@ nuget:
   disable_publish_on_pr: true
 
 configuration: Release
-platform: Any CPU
 
 build:
   parallel: true
   publish_nuget: true
   publish_nuget_symbols: true
   verbosity: minimal
-  project: FIGlet.sln
 
 deploy:
   provider: NuGet

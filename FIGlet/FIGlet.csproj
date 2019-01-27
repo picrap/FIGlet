@@ -1,81 +1,24 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DBEB2DC7-7D7D-41B5-AC52-D54932896A46}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FIGlet</RootNamespace>
+    <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
+    <SignAssembly>true</SignAssembly>
+    <PackageId>FIGlet-_-lib</PackageId>
+    <Version>1.0.6</Version>
+    <Company>picrap</Company>
+    <PackageLicenseUrl>https://github.com/picrap/FIGlet/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/picrap/FIGlet</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/picrap/FIGlet/master/FIGlet/FIGlet.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/picrap/FIGlet.git</RepositoryUrl>
+    <Copyright>picrap</Copyright>
+    <Description>A FIGlet library that allows to generate ASCII art (in the form of big letters) from text. Supports most common features such as fitting and smushing, reads fonts from raw or zipped files and offers extensibility.</Description>
+    <RepositoryType>git</RepositoryType>
+    <Product>FIGlet</Product>
+    <Authors>picrap</Authors>
     <AssemblyName>FIGlet</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageTags>figlet</PackageTags>
+    <AssemblyOriginatorKeyFile>FIGlet.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\FIGlet.xml</DocumentationFile>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\FIGlet.xml</DocumentationFile>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Blend\DrawingElementBlender.cs" />
-    <Compile Include="Blend\EqualsDrawingElementBlender.cs" />
-    <Compile Include="Blend\FlatDrawingElementBlender.cs" />
-    <Compile Include="Blend\HierarchySmushingDrawingElementBlender.cs" />
-    <Compile Include="Blend\IDrawingElementBlender.cs" />
-    <Compile Include="Blend\InverseDrawingElementBlender.cs" />
-    <Compile Include="Blend\MultiDrawingElementBlender.cs" />
-    <Compile Include="Blend\NoOverrideDrawingElementBlender.cs" />
-    <Compile Include="Blend\OverMatchesDrawingElementBlender.cs" />
-    <Compile Include="Blend\PairDrawingElementBlender.cs" />
-    <Compile Include="Blend\SpecificOverrideDrawingElementBlender.cs" />
-    <Compile Include="CharacterDrawingElement.cs" />
-    <Compile Include="LayoutRule.cs" />
-    <Compile Include="Drawing\DrawingBoard.cs" />
-    <Compile Include="Drawing\DrawingElement.cs" />
-    <Compile Include="EmbeddedFIGfontReference.cs" />
-    <Compile Include="FIGcharacter.cs" />
-    <Compile Include="FIGfont.cs" />
-    <Compile Include="FIGdriver.cs" />
-    <Compile Include="FIGfontReference.cs" />
-    <Compile Include="FileFIGfontReference.cs" />
-    <Compile Include="Fonts\FontsRoot.cs" />
-    <Compile Include="UnicodeChar.cs" />
-    <Compile Include="Utility\EnumerableExtensions.cs" />
-    <Compile Include="Utility\FIGfontExtensions.cs" />
-    <Compile Include="Utility\IntParser.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\StreamExtensions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="FIGlet.nuspec" />
-    <EmbeddedResource Include="Fonts\big.zip" />
-    <EmbeddedResource Include="Fonts\small.zip" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="FIGlet.png" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>
