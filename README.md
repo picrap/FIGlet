@@ -6,7 +6,7 @@
  ```                                         
 
 A simple to use (but extensible) FIGlet generator library for .NET framework.  
-Available as a [![NuGet Status](http://img.shields.io/nuget/v/FIGlet-_-lib.svg?style=flat-square)](https://www.nuget.org/packages/FIGlet-_-lib) package.
+Available as a [![NuGet](http://img.shields.io/nuget/v/FIGlet-_-lib.svg?style=flat-square)](https://www.nuget.org/packages/FIGlet-_-lib) package.
 
 # Features
 
