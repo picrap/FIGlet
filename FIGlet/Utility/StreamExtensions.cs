@@ -8,7 +8,7 @@ namespace FIGlet.Utility
     /// <summary>
     /// Extensions to <see cref="Stream"/>
     /// </summary>
-    public static class StreamExtensions
+    internal static class StreamExtensions
     {
         private static int MakeInt(int b0, int b1, int b2 = 0, int b3 = 0)
         {
@@ -22,8 +22,7 @@ namespace FIGlet.Utility
         /// <returns></returns>
         public static short ReadShort(this Stream stream)
         {
-            var b = new byte[2];
-            stream.Read(b, 0, b.Length);
+            var b = ReadBytes(stream, 2);
             return (short)MakeInt(b[0], b[1]);
         }
 
@@ -34,8 +33,7 @@ namespace FIGlet.Utility
         /// <returns></returns>
         public static int ReadInt(this Stream stream)
         {
-            var b = new byte[4];
-            stream.Read(b, 0, b.Length);
+            var b = ReadBytes(stream, 4);
             return MakeInt(b[0], b[1], b[2], b[3]);
         }
 
@@ -48,8 +46,27 @@ namespace FIGlet.Utility
         public static byte[] ReadBytes(this Stream stream, int length)
         {
             var b = new byte[length];
-            stream.Read(b, 0, b.Length);
+            if (ReadAll(stream, b, 0, b.Length) != b.Length)
+                throw new IOException("Not enough data in stream");
             return b;
+        }
+
+        private static int ReadAll(Stream stream, byte[] buffer, int offset, int count)
+        {
+            var totalRead = 0;
+            for (; ; )
+            {
+                var stepRead = stream.Read(buffer, offset, count);
+                if (stepRead == 0)
+                    break;
+                totalRead += stepRead;
+                count -= stepRead;
+                offset += stepRead;
+                if (count == 0)
+                    break;
+            }
+
+            return totalRead;
         }
 
         /// <summary>
