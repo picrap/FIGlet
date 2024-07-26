@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2050
@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIGlet", "FIGlet\FIGlet.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FIGletTest", "Test\FIGletTest\FIGletTest.csproj", "{E7E521DA-11F8-40BC-BDA7-FCEF72ABF7C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIGletDemo", "Test\FIGletDemo\FIGletDemo.csproj", "{D5D1B3D9-2C21-450A-B3A9-E9C561848D8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FIGletDemo", "Test\FIGletDemo\FIGletDemo.csproj", "{D5D1B3D9-2C21-450A-B3A9-E9C561848D8D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{66EFCED1-45AA-49C4-8D74-BF6C71AE9491}"
 	ProjectSection(SolutionItems) = preProject

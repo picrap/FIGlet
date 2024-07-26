@@ -5,7 +5,7 @@ branches:
     - master
 
 version: '{branch}-{build}'
-image: Visual Studio 2019
+image: Visual Studio 2022
 
 before_build:
   nuget restore
@@ -26,5 +26,5 @@ build:
 deploy:
   provider: NuGet
   api_key:
-    secure: Doc+VNHcVOc8oefVdQREqF1r4CoHBDd0Z/pj/HrnzMIndQecIq6BzPmyOMj2yJYE
+    secure: FXdfurOFdTV/iNGNBf9Vqb3teeqGMrwuMxpoWQMVzHsZ9roqoCCGOQxrzhRM5Wwm
   skip_symbols: false
