@@ -4,7 +4,7 @@
     <TargetFrameworks>net40;netstandard2.0;net6.0;net8.0</TargetFrameworks>
     <SignAssembly>true</SignAssembly>
     <PackageId>FIGlet-_-lib</PackageId>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <Company>picrap</Company>
     <PackageLicenseUrl>https://github.com/picrap/FIGlet/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/picrap/FIGlet</PackageProjectUrl>
@@ -20,5 +20,15 @@
     <PackageTags>figlet</PackageTags>
     <AssemblyOriginatorKeyFile>FIGlet.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Fonts\big.zip" />
+    <None Remove="Fonts\small.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Fonts\big.zip" />
+    <EmbeddedResource Include="Fonts\small.zip" />
+  </ItemGroup>
 
 </Project>
